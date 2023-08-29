@@ -1,0 +1,28 @@
+{
+    "name": "intellect-web-development/templator-symfony-bundle",
+    "description": "Templator Symfony bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/intellect-web-development/templator-symfony-bundle/issues"
+    },
+    "authors": [
+        {
+            "name": "alexander.erin",
+            "email": "sanyaerin@mail.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "IWD\\Symfony\\TemplatorSymfonyBundle\\": "src/"
+        }
+    },
+    "require-dev": {
+        "symfony/config": "^6.3",
+        "symfony/dependency-injection": "^6.3",
+        "symfony/http-kernel": "^6.3"
+    },
+    "require": {
+        "intellect-web-development/templator": "^0.0.1"
+    }
+}

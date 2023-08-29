@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    IWD\Symfony\TemplatorSymfonyBundle\:
+        resource: '../../../src/*'
+        exclude:
+            - '../../../src/DependencyInjection/'
