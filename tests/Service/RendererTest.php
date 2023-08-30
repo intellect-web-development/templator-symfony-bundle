@@ -89,9 +89,9 @@ class RendererTest extends KernelTestCase
                 'obj' => $obj = new stdClass(),
             ]
         );
-        $obj->name = 'Alexander';
+        $obj->name = 'Templator';
 
-        $expected = 'My name is Alexander!';
+        $expected = 'My name is Templator!';
 
         self::assertSame(
             $expected,
@@ -105,12 +105,12 @@ class RendererTest extends KernelTestCase
             template: 'My name is {{ obj.name }}!',
             variables: [
                 'obj' => new class () {
-                    public string $name = 'Alexander';
+                    public string $name = 'Templator';
                 },
             ]
         );
 
-        $expected = 'My name is Alexander!';
+        $expected = 'My name is Templator!';
 
         self::assertSame(
             $expected,
@@ -129,15 +129,15 @@ class RendererTest extends KernelTestCase
                     public function __construct()
                     {
                         $this->name = new class () {
-                            public string $first = 'Alexander';
-                            public string $last = 'Shaman';
+                            public string $first = 'Templator';
+                            public string $last = 'Symfony';
                         };
                     }
                 },
             ]
         );
 
-        $expected = 'My name is Alexander Shaman!';
+        $expected = 'My name is Templator Symfony!';
 
         self::assertSame(
             $expected,
