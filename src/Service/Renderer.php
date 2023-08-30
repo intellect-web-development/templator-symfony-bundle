@@ -7,6 +7,7 @@ namespace IWD\Templator\Service;
 use Adbar\Dot;
 use IWD\Templator\Dto\Renderable;
 use IWD\Templator\Dto\NormalizeVariable;
+use IWD\Templator\Filters\Factory\FilterFactory;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
@@ -14,8 +15,9 @@ class Renderer
 {
     private readonly PropertyAccessor $propertyAccessor;
 
-    public function __construct()
-    {
+    public function __construct(
+        private readonly FilterFactory $filterFactory,
+    ) {
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
@@ -59,18 +61,20 @@ class Renderer
     {
         $resultValue = $value;
         foreach ($filters as $filter) {
-            $resultValue = match ($filter) {
-                'urlize', 'url' => Inflector::urlize($resultValue),
-                'camelize', 'camel' => Inflector::camelize($resultValue),
-                'classify', 'class' => Inflector::classify($resultValue),
-                'tableize', 'table' => Inflector::tableize($resultValue),
-                'kebabize', 'kebab' => Inflector::kebab($resultValue),
-                'capitalize', 'capital' => Inflector::capitalize($resultValue),
-                'constantize', 'const' => Inflector::constantize($resultValue),
-                'pluralize', 'plural' => Inflector::pluralize($resultValue),
-                'singularize', 'singular' => Inflector::singularize($resultValue),
-                default => $resultValue,
-            };
+            $resultValue = $this->filterFactory->getByCode($filter)?->apply($resultValue) ?? $resultValue;
+            #todo: Реализовать через FilterInterface
+//            $resultValue = match ($filter) {
+//                'urlize', 'url' => Inflector::urlize($resultValue),
+//                'camelize', 'camel' => Inflector::camelize($resultValue),
+//                'classify', 'class' => Inflector::classify($resultValue),
+//                'tableize', 'table' => Inflector::tableize($resultValue),
+//                'kebabize', 'kebab' => Inflector::kebab($resultValue),
+//                'capitalize', 'capital' => Inflector::capitalize($resultValue),
+//                'constantize', 'const' => Inflector::constantize($resultValue),
+//                'pluralize', 'plural' => Inflector::pluralize($resultValue),
+//                'singularize', 'singular' => Inflector::singularize($resultValue),
+//                default => $resultValue,
+//            };
         }
 
         return $resultValue;

@@ -7,14 +7,17 @@ namespace IWD\Templator\Service;
 use IWD\Templator\Dto\Renderable;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class RendererTest extends TestCase
+class RendererTest extends KernelTestCase
 {
     private static Renderer $renderer;
 
     public function setUp(): void
     {
-        self::$renderer = new Renderer();
+        self::bootKernel();
+
+        self::$renderer = self::getContainer()->get(Renderer::class);
 
         parent::setUp();
     }
