@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IWD\Symfony\PresentationBundle\DependencyInjection;
+namespace IWD\Templator\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;

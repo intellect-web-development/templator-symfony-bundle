@@ -1,28 +1,39 @@
 {
     "name": "intellect-web-development/templator-symfony-bundle",
-    "description": "Templator Symfony bundle",
+    "description": "Templator Symfony bundle for render template",
     "type": "symfony-bundle",
     "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/intellect-web-development/templator-symfony-bundle/issues"
-    },
     "authors": [
         {
-            "name": "alexander.erin",
-            "email": "sanyaerin@mail.ru"
+            "name": "Alexander Erin",
+            "role": "Maintainer"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "IWD\\Symfony\\TemplatorSymfonyBundle\\": "src/"
-        }
-    },
     "require": {
-        "intellect-web-development/templator": "*"
+        "php": ">=8.1",
+        "symfony/property-access": "*",
+        "adbario/php-dot-notation": "*",
+        "doctrine/inflector": "*",
+        "symfony/config": "*",
+        "symfony/dependency-injection": "*",
+        "symfony/http-kernel": "*"
     },
     "require-dev": {
-        "symfony/config": "^6.3",
-        "symfony/dependency-injection": "^6.3",
-        "symfony/http-kernel": "^6.3"
+        "phpunit/phpunit": "^10.3",
+        "phpstan/phpstan": "^1.10",
+        "vimeo/psalm": "^5.15",
+        "overtrue/phplint": "^9.0",
+        "friendsofphp/php-cs-fixer": "^3.23",
+        "rector/rector": "^0.18.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "IWD\\Templator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IWD\\Templator\\": "tests/"
+        }
     }
 }

@@ -1,6 +1,9 @@
 /.idea/
 /vendor/
+/var/
+/.phplint.cache
+/phpunit.xml
 /.phpunit.result.cache
-/var/myreport/
-/var/cache/
+/.phpunit.cache/test-results
 /.php-cs-fixer.cache
+/composer.lock
