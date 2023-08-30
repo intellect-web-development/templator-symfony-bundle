@@ -11,6 +11,7 @@ class NormalizeVariable
     public readonly string $targetVariable;
     public readonly string $rootTargetVariable;
     public readonly string $withoutRootTargetVariable;
+    /** @var string[] */
     public readonly array $filters;
 
     public function __construct(

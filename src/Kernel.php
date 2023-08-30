@@ -6,25 +6,13 @@ namespace IWD\Templator;
 
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
-use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 /** @codeCoverageIgnore */
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
-
-    public function __construct(string $environment, bool $debug)
-    {
-        date_default_timezone_set('Europe/Moscow');
-        //        $environment ='dev';
-        $environment ='test';
-        $debug= true;
-
-        parent::__construct($environment, $debug);
-    }
 
     public function registerBundles(): iterable
     {
@@ -38,6 +26,9 @@ class Kernel extends BaseKernel
         $this->configureContainerForPath($container, __DIR__ . '/Resources/config');
     }
 
+    /**
+     * @psalm-suppress MixedOperand
+     */
     public function configureContainerForPath(ContainerConfigurator $container, string $pathToConfig): void
     {
         $container->import($pathToConfig . '/{packages}/*.yaml');

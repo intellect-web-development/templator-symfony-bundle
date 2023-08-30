@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace IWD\Templator\Service;
 
 use IWD\Templator\Dto\Renderable;
-use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -17,7 +16,9 @@ class RendererTest extends KernelTestCase
     {
         self::bootKernel();
 
-        self::$renderer = self::getContainer()->get(Renderer::class);
+        /** @var Renderer $renderer */
+        $renderer = self::getContainer()->get(Renderer::class);
+        self::$renderer = $renderer;
 
         parent::setUp();
     }

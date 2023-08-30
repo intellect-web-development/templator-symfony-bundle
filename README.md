@@ -1,5 +1,12 @@
 # Template engine
 
-TODO :)
+```php
+$renderable = new Renderable(
+    template: 'My first {{variable}} content',
+    variables: [
+        'variable' => 'rendered',
+    ]
+);
 
-Show tests/RendererTest.php for examples.
+$expected = 'My first rendered content';
+```

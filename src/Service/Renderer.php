@@ -67,10 +67,6 @@ class Renderer
         $resultValue = $value;
         foreach ($filters as $filter) {
             $resultValue = $this->filterFactory->getByCode($filter)?->apply($resultValue) ?? $resultValue;
-            #todo: Реализовать через FilterInterface
-//            $resultValue = match ($filter) {
-//                default => $resultValue,
-//            };
         }
 
         return $resultValue;
