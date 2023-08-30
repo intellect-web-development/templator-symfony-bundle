@@ -17,12 +17,12 @@
             "IWD\\Symfony\\TemplatorSymfonyBundle\\": "src/"
         }
     },
+    "require": {
+        "intellect-web-development/templator": "*"
+    },
     "require-dev": {
         "symfony/config": "^6.3",
         "symfony/dependency-injection": "^6.3",
         "symfony/http-kernel": "^6.3"
-    },
-    "require": {
-        "intellect-web-development/templator": "^0.0.1"
     }
 }
