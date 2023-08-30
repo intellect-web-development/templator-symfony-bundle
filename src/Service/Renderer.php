@@ -57,6 +57,11 @@ class Renderer
         return $template;
     }
 
+    /**
+     * @param string $value
+     * @param string[] $filters
+     * @return string
+     */
     private function applyFilters(string $value, array $filters): string
     {
         $resultValue = $value;
@@ -64,15 +69,6 @@ class Renderer
             $resultValue = $this->filterFactory->getByCode($filter)?->apply($resultValue) ?? $resultValue;
             #todo: Реализовать через FilterInterface
 //            $resultValue = match ($filter) {
-//                'urlize', 'url' => Inflector::urlize($resultValue),
-//                'camelize', 'camel' => Inflector::camelize($resultValue),
-//                'classify', 'class' => Inflector::classify($resultValue),
-//                'tableize', 'table' => Inflector::tableize($resultValue),
-//                'kebabize', 'kebab' => Inflector::kebab($resultValue),
-//                'capitalize', 'capital' => Inflector::capitalize($resultValue),
-//                'constantize', 'const' => Inflector::constantize($resultValue),
-//                'pluralize', 'plural' => Inflector::pluralize($resultValue),
-//                'singularize', 'singular' => Inflector::singularize($resultValue),
 //                default => $resultValue,
 //            };
         }
