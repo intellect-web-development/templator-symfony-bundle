@@ -40,21 +40,22 @@ class Renderer
                 $preparedTargetValue = (string) $this->propertyAccessor->getValue($targetValue, $variable->withoutRootTargetVariable);
                 $preparedTargetValue = $this->applyFilters($preparedTargetValue, $variable->filters);
                 $template = str_replace($variable->raw, $preparedTargetValue, $template);
-            }
-            if (is_array($targetValue)) {
+            } elseif (is_array($targetValue)) {
                 $dotVariableValue = new Dot($targetValue, true);
                 $preparedTargetValue = (string) $dotVariableValue[$variable->withoutRootTargetVariable];
                 $preparedTargetValue = $this->applyFilters($preparedTargetValue, $variable->filters);
                 $template = str_replace($variable->raw, $preparedTargetValue, $template);
-            }
-            if (is_string($targetValue) || is_numeric($targetValue)) {
+            } elseif (is_string($targetValue) || is_numeric($targetValue)) {
                 $preparedTargetValue = (string) $targetValue;
                 $preparedTargetValue = $this->applyFilters($preparedTargetValue, $variable->filters);
+                $template = str_replace($variable->raw, $preparedTargetValue, $template);
+            } else {
+                $preparedTargetValue = Renderable::BACKSPACE_SYMBOL;
                 $template = str_replace($variable->raw, $preparedTargetValue, $template);
             }
         }
 
-        return $template;
+        return $this->clearEmptyLines($template);
     }
 
     /**
@@ -70,5 +71,14 @@ class Renderer
         }
 
         return $resultValue;
+    }
+
+    private function clearEmptyLines(string $payload): string
+    {
+        return str_replace([
+            Renderable::BACKSPACE_SYMBOL . PHP_EOL,
+            PHP_EOL . Renderable::BACKSPACE_SYMBOL,
+            Renderable::BACKSPACE_SYMBOL,
+        ], '', $payload);
     }
 }
