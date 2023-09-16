@@ -15,7 +15,6 @@ class Renderable
          * @var array<string,mixed>
          */
         public readonly array $variables = [],
-        array $preparedVariables = [],
     ) {
         $this->preparedVariables = array_map(
             static function (mixed $value): mixed {
