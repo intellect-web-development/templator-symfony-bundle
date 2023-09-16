@@ -7,6 +7,7 @@ namespace IWD\Templator\Dto;
 class Renderable
 {
     public const BACKSPACE_SYMBOL = '___%%%__[@[%back_space_symbol%]@]__%%%___';
+    public array $preparedVariables;
 
     public function __construct(
         public readonly string $template,
@@ -14,7 +15,7 @@ class Renderable
          * @var array<string,mixed>
          */
         public readonly array $variables = [],
-        public array $preparedVariables = [],
+        array $preparedVariables = [],
     ) {
         $this->preparedVariables = array_map(
             static function (mixed $value): mixed {
