@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace IWD\Templator\Service;
 
 use Adbar\Dot;
+use Generator;
 use IWD\Templator\Dto\Renderable;
 use IWD\Templator\Dto\NormalizeVariable;
 use IWD\Templator\Filters\Factory\FilterFactory;
@@ -21,13 +22,27 @@ class Renderer
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
+    /**
+     * @return Generator<NormalizeVariable>
+     */
+    public function extractNormalizeVariables(?array $matches = null): Generator
+    {
+        foreach ($matches[0] as $key => $match) {
+            if (str_contains($matches[1][$key], '{{')) {
+                preg_match_all('/{{(.+?)}}/', $matches[1][$key], $localMatches);
+                foreach ($this->extractNormalizeVariables($localMatches) as $variable) {
+                    yield $variable;
+                }
+            }
+
+            yield new NormalizeVariable($match);
+        }
+    }
+
     public function render(Renderable $renderable): string
     {
-        $normalizeVariables = [];
-        preg_match_all('/{{(.+?)}}/', $renderable->template, $matches);
-        foreach ($matches[0] as $match) {
-            $normalizeVariables[] = new NormalizeVariable($match);
-        }
+        preg_match_all('/\{\{((?:(?!{{|}})(?:[^{}]|(?R)))+)\}\}/', $renderable->template, $matches);
+        $normalizeVariables = $this->extractNormalizeVariables($matches);
 
         $template = $renderable->template;
         foreach ($normalizeVariables as $variable) {

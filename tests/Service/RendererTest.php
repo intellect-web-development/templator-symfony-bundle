@@ -218,4 +218,39 @@ class RendererTest extends KernelTestCase
             self::$renderer->render($renderable)
         );
     }
+
+    public function testWithSpecSymbols(): void
+    {
+        $renderable = new Renderable(
+            template: <<<'TEMPLATE'
+                {% if data is not null %}
+                    {% if (data.id is defined) %}
+                        <a class="ui labeled icon" href="{{ path('app_{{boundedContextName | tableize}}.{{entity_name | tableize}}_show'}}"</a>
+                        <a class="ui labeled icon" href="{{ path('app_{{boundedContextName | tableize}}....{{entity_name | tableize}}_show'}}"</a>
+                        {{ has }}
+                    {% endif %}
+                {% endif %}
+                TEMPLATE,
+            variables: [
+                'boundedContextName' => 'Profile',
+                'entity_name' => 'Client',
+            ],
+        );
+
+        $expected = <<<'TEMPLATE'
+        {% if data is not null %}
+            {% if (data.id is defined) %}
+                <a class="ui labeled icon" href="{{ path('app_profile.client_show'}}"</a>
+                <a class="ui labeled icon" href="{{ path('app_profile....client_show'}}"</a>
+                {{ has }}
+            {% endif %}
+        {% endif %}
+        TEMPLATE;
+
+
+        self::assertSame(
+            $expected,
+            self::$renderer->render($renderable)
+        );
+    }
 }
