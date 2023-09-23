@@ -25,17 +25,20 @@ class Renderer
     /**
      * @return Generator<NormalizeVariable>
      */
-    public function extractNormalizeVariables(?array $matches = null): Generator
+    public function extractNormalizeVariables(array $matches): Generator
     {
-        foreach ($matches[0] as $key => $match) {
-            if (str_contains($matches[1][$key], '{{')) {
-                preg_match_all('/{{(.+?)}}/', $matches[1][$key], $localMatches);
-                foreach ($this->extractNormalizeVariables($localMatches) as $variable) {
-                    yield $variable;
+        if (isset($matches[0], $matches[1])) {
+            foreach ($matches[0] as $key => $match) {
+                /** @psalm-suppress MixedArrayOffset */
+                if (isset($matches[1][$key]) && str_contains((string) $matches[1][$key], '{{')) {
+                    preg_match_all('/{{(.+?)}}/', (string) $matches[1][$key], $localMatches);
+                    foreach ($this->extractNormalizeVariables($localMatches) as $variable) {
+                        yield $variable;
+                    }
                 }
-            }
 
-            yield new NormalizeVariable($match);
+                yield new NormalizeVariable((string) $match);
+            }
         }
     }
 

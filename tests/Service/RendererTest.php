@@ -238,14 +238,14 @@ class RendererTest extends KernelTestCase
         );
 
         $expected = <<<'TEMPLATE'
-        {% if data is not null %}
-            {% if (data.id is defined) %}
-                <a class="ui labeled icon" href="{{ path('app_profile.client_show'}}"</a>
-                <a class="ui labeled icon" href="{{ path('app_profile....client_show'}}"</a>
-                {{ has }}
+            {% if data is not null %}
+                {% if (data.id is defined) %}
+                    <a class="ui labeled icon" href="{{ path('app_profile.client_show'}}"</a>
+                    <a class="ui labeled icon" href="{{ path('app_profile....client_show'}}"</a>
+                    {{ has }}
+                {% endif %}
             {% endif %}
-        {% endif %}
-        TEMPLATE;
+            TEMPLATE;
 
 
         self::assertSame(
