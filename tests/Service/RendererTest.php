@@ -40,6 +40,21 @@ class RendererTest extends KernelTestCase
         );
     }
 
+    public function testNotFoundVarSafeRender(): void
+    {
+        $renderable = new Renderable(
+            template: 'My first {{ my_var }} content',
+            variables: ['other' => 'demo']
+        );
+
+        $expected = 'My first {{ my_var }} content';
+
+        self::assertSame(
+            $expected,
+            self::$renderer->render($renderable)
+        );
+    }
+
     public function testManyStringRender(): void
     {
         $renderable = new Renderable(

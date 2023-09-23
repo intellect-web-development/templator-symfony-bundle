@@ -50,8 +50,10 @@ class Renderer
                 $preparedTargetValue = $this->applyFilters($preparedTargetValue, $variable->filters);
                 $template = str_replace($variable->raw, $preparedTargetValue, $template);
             } else {
-                $preparedTargetValue = Renderable::BACKSPACE_SYMBOL;
-                $template = str_replace($variable->raw, $preparedTargetValue, $template);
+                if (in_array($variable->rootTargetVariable, $renderable->variables)) {
+                    $preparedTargetValue = Renderable::BACKSPACE_SYMBOL;
+                    $template = str_replace($variable->raw, $preparedTargetValue, $template);
+                }
             }
         }
 
