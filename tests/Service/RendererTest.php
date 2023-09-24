@@ -43,8 +43,11 @@ class RendererTest extends KernelTestCase
     public function testNotFoundVarSafeRender(): void
     {
         $renderable = new Renderable(
-            template: 'My first {{ my_var }} content',
-            variables: ['other' => 'demo']
+            template: 'My {{has_var}}first {{ my_var }} content',
+            variables: [
+                'other' => 'demo',
+                'has_var' => null,
+            ]
         );
 
         $expected = 'My first {{ my_var }} content';
