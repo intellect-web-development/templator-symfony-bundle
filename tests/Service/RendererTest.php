@@ -256,4 +256,42 @@ class RendererTest extends KernelTestCase
             self::$renderer->render($renderable)
         );
     }
+
+    public function testCollapse(): void
+    {
+        self::assertSame(
+            <<<'TEMPLATE'
+                class {
+                123
+                }
+                TEMPLATE,
+            self::$renderer->render(new Renderable(
+                template: <<<'TEMPLATE'
+                    class {
+                    {{var}}
+                    }
+                    TEMPLATE,
+                variables: [
+                    'var' => '123',
+                ],
+            ))
+        );
+
+        self::assertSame(
+            <<<'TEMPLATE'
+                class {
+                }
+                TEMPLATE,
+            self::$renderer->render(new Renderable(
+                template: <<<'TEMPLATE'
+                    class {
+                    {{var}}
+                    }
+                    TEMPLATE,
+                variables: [
+                    'var' => null,
+                ],
+            ))
+        );
+    }
 }
