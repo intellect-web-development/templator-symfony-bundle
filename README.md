@@ -1,5 +1,5 @@
 # Template engine
-
+## Examples
 Simple example:
 ```php
 $renderable = new Renderable(
