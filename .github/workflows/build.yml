@@ -15,5 +15,6 @@ jobs:
 
     - name: Testing
       run: |
-        composer install
+        make up
+        make composer-install
         make analyze
